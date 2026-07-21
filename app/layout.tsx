@@ -21,5 +21,14 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body>{children}</body></html>;
+  return (
+    <html lang="en">
+      <head>
+        <link rel="stylesheet" href="/assets/original-base.css" />
+        <link rel="stylesheet" href="/assets/original-landing.css" />
+        <link rel="stylesheet" href="/assets/original-contact.css" />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
 }

@@ -35,16 +35,23 @@ test("ships site-specific assets and metadata", async () => {
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
   ]);
 
-  assert.match(page, /portfolio\.map/);
-  assert.match(page, /aria-expanded=\{menuOpen\}/);
+  assert.match(page, /originalMarkup/);
+  assert.match(page, /originalMobileMarkup/);
+  assert.match(page, /aria-expanded/);
   assert.match(layout, /Avena \| Custom Software Development/);
   assert.match(layout, /\/og\.png/);
-  assert.match(css, /@media \(max-width:600px\)/);
+  assert.match(layout, /\/assets\/original-base\.css/);
+  assert.match(layout, /\/assets\/original-landing\.css/);
+  assert.match(layout, /\/assets\/original-contact\.css/);
+  assert.match(css, /prefers-reduced-motion/);
   assert.doesNotMatch(page + layout, /_sites-preview|SkeletonPreview/);
 
   await Promise.all([
     access(new URL("../public/og.png", import.meta.url)),
     access(new URL("../public/assets/landing-background.webp", import.meta.url)),
     access(new URL("../public/assets/talenthub.dcfd5067.webp", import.meta.url)),
+    access(new URL("../public/assets/original-base.css", import.meta.url)),
+    access(new URL("../public/assets/original-landing.css", import.meta.url)),
+    access(new URL("../public/assets/original-contact.css", import.meta.url)),
   ]);
 });
