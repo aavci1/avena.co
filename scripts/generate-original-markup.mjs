@@ -1,5 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { proofreadMarkup } from "./proofreading-replacements.mjs";
 
 const [inputPath, outputPath] = process.argv.slice(2);
 if (!inputPath || !outputPath) {
@@ -47,6 +48,8 @@ markup = markup
   .replace('id="contact-name" type="text"', 'id="contact-name" type="text" required')
   .replace('id="contact-message" type="text"', 'id="contact-message" required')
   .replace(' disabled=""', '');
+
+markup = proofreadMarkup(markup);
 
 const source = `// Generated from the owner-authorized live avena.co render.\nexport const originalMarkup = ${JSON.stringify(markup)};\n`;
 await writeFile(outputPath, source);

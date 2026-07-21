@@ -25,6 +25,11 @@ test("server-renders the Avena single page", async () => {
   assert.match(html, /id="portfolio"/);
   assert.match(html, /id="services"/);
   assert.match(html, /id="contact-us"/);
+  assert.match(html, /Search for what you are looking for and get the best matches\./);
+  assert.match(html, /Our Methodology/);
+  assert.doesNotMatch(html, /best-macthes|Methogology|Abous Us/i);
+  assert.doesNotMatch(html, />Javascript</);
+  assert.doesNotMatch(html, />Linkedin</);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/i);
 });
 
