@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { access, readFile } from "node:fs/promises";
+import { access, readFile, readdir } from "node:fs/promises";
 import test from "node:test";
 
 async function render() {
@@ -30,10 +30,14 @@ test("server-renders the Avena single page", async () => {
   assert.doesNotMatch(html, /best-macthes|Methogology|Abous Us/i);
   assert.doesNotMatch(html, />Javascript</);
   assert.doesNotMatch(html, />Linkedin</);
+  assert.doesNotMatch(html, /href="\/assets\/original-(?:base|landing|contact)\.css"/);
   assert.doesNotMatch(html, /codex-preview|react-loading-skeleton|Your site is taking shape/i);
 });
 
 test("ships site-specific assets and metadata", async () => {
+  const builtAssets = new URL("../dist/client/assets/", import.meta.url);
+  const builtCssFiles = (await readdir(builtAssets)).filter((file) => file.endsWith(".css"));
+  const builtCss = (await Promise.all(builtCssFiles.map((file) => readFile(new URL(file, builtAssets), "utf8")))).join("\n");
   const [page, layout, css] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
@@ -45,18 +49,20 @@ test("ships site-specific assets and metadata", async () => {
   assert.match(page, /aria-expanded/);
   assert.match(layout, /Avena \| Custom Software Development/);
   assert.match(layout, /\/og\.png/);
-  assert.match(layout, /\/assets\/original-base\.css/);
-  assert.match(layout, /\/assets\/original-landing\.css/);
-  assert.match(layout, /\/assets\/original-contact\.css/);
+  assert.match(layout, /\.\/styles\/original-base\.css/);
+  assert.match(layout, /\.\/styles\/original-landing\.css/);
+  assert.match(layout, /\.\/styles\/original-contact\.css/);
   assert.match(css, /prefers-reduced-motion/);
+  assert.match(builtCss, /header_header__3o0p0/);
+  assert.match(builtCss, /landing_section_1__wUsHN/);
   assert.doesNotMatch(page + layout, /_sites-preview|SkeletonPreview/);
 
   await Promise.all([
     access(new URL("../public/og.png", import.meta.url)),
     access(new URL("../public/assets/landing-background.webp", import.meta.url)),
     access(new URL("../public/assets/talenthub.dcfd5067.webp", import.meta.url)),
-    access(new URL("../public/assets/original-base.css", import.meta.url)),
-    access(new URL("../public/assets/original-landing.css", import.meta.url)),
-    access(new URL("../public/assets/original-contact.css", import.meta.url)),
+    access(new URL("../app/styles/original-base.css", import.meta.url)),
+    access(new URL("../app/styles/original-landing.css", import.meta.url)),
+    access(new URL("../app/styles/original-contact.css", import.meta.url)),
   ]);
 });
