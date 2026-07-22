@@ -49,6 +49,7 @@ test("ships site-specific assets and metadata", async () => {
   assert.match(page, /originalMarkup/);
   assert.match(page, /originalMobileMarkup/);
   assert.match(page, /aria-expanded/);
+  assert.match(page, /max-width: 767px\) and \(pointer: coarse/);
   assert.match(layout, /Avena \| Custom Software Development/);
   assert.match(layout, /\/og\.png/);
   assert.match(layout, /\.\/styles\/original-base\.css/);
@@ -56,6 +57,7 @@ test("ships site-specific assets and metadata", async () => {
   assert.match(layout, /\.\/styles\/original-contact\.css/);
   assert.match(css, /prefers-reduced-motion/);
   assert.match(css, /@media \(min-width:1024px\)/);
+  assert.match(css, /@media \(hover:hover\) and \(pointer:fine\)/);
   assert.match(css, /avena-desktop-wordmark/);
   assert.match(builtCss, /header_header__3o0p0/);
   assert.match(builtCss, /landing_section_1__wUsHN/);

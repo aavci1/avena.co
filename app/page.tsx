@@ -22,7 +22,7 @@ export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const query = window.matchMedia("(max-width: 767px)");
+    const query = window.matchMedia("(max-width: 767px) and (pointer: coarse)");
     const update = () => setIsMobile(query.matches);
     update();
     query.addEventListener("change", update);

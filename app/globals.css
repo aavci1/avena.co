@@ -7,6 +7,12 @@ body{margin:0}
 .avena-desktop-wordmark{display:none;align-items:center}
 .avena-compact-mark{display:inline-flex;align-items:center}
 
+@media (hover:hover) and (pointer:fine){
+  [class*="header_header__"] [aria-label="menu"]{display:none!important}
+  .avena-desktop-wordmark{display:inline-flex}
+  .avena-compact-mark{display:none}
+}
+
 @media (min-width:1024px){
   [class*="header_header__"] [aria-label="menu"]{display:none!important}
   [class*="header_header__"] [class*="header_desktopLink"]{display:inline-flex!important}
