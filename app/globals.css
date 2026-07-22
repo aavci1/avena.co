@@ -4,5 +4,15 @@ body{margin:0}
 .anticon>svg{display:inline-block}
 .static-contact-note{margin:0;color:#16865e;font:500 13px/20px Poppins,sans-serif}
 [class*="landing_get_in_touch_with_us"]{cursor:pointer}
+.avena-desktop-wordmark{display:none;align-items:center}
+.avena-compact-mark{display:inline-flex;align-items:center}
+
+@media (min-width:1024px){
+  [class*="header_header__"] [aria-label="menu"]{display:none!important}
+  [class*="header_header__"] [class*="header_desktopLink"]{display:inline-flex!important}
+  [class*="header_header__"] [class*="header_headerContent"]{gap:20px!important}
+  .avena-desktop-wordmark{display:inline-flex}
+  .avena-compact-mark{display:none}
+}
 
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}

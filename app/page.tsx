@@ -5,6 +5,18 @@ import { originalMarkup } from "./originalMarkup";
 import { originalMarkup as originalMobileMarkup } from "./originalMobileMarkup";
 import { originalMarkup as originalMenuMarkup } from "./originalMenuMarkup";
 
+const desktopWordmark = originalMenuMarkup
+  .match(/<svg width="104"[\s\S]*?<\/svg>/)?.[0]
+  ?.replace('width="104"', 'width="121"')
+  .replace('height="30"', 'height="35"');
+
+const desktopMarkup = desktopWordmark
+  ? originalMarkup.replace(
+      /(<a class=" nohover" aria-label="home page" style="display:flex" href="#top">)(<svg width="28"[\s\S]*?<\/svg>)(<\/a>)/,
+      `$1<span class="avena-desktop-wordmark">${desktopWordmark}</span><span class="avena-compact-mark">$2</span>$3`,
+    )
+  : originalMarkup;
+
 export default function Home() {
   const rootRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -138,5 +150,5 @@ export default function Home() {
     return () => cleanups.forEach((cleanup) => cleanup());
   }, [isMobile]);
 
-  return <div key={isMobile ? "mobile" : "desktop"} ref={rootRef} dangerouslySetInnerHTML={{ __html: isMobile ? originalMobileMarkup : originalMarkup }} />;
+  return <div key={isMobile ? "mobile" : "desktop"} ref={rootRef} dangerouslySetInnerHTML={{ __html: isMobile ? originalMobileMarkup : desktopMarkup }} />;
 }

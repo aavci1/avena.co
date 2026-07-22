@@ -27,6 +27,8 @@ test("server-renders the Avena single page", async () => {
   assert.match(html, /id="contact-us"/);
   assert.match(html, /Search for what you are looking for and get the best matches\./);
   assert.match(html, /Our Methodology/);
+  assert.match(html, /class="avena-desktop-wordmark"/);
+  assert.match(html, /<svg width="121" height="35" viewBox="0 0 121 35"/);
   assert.doesNotMatch(html, /best-macthes|Methogology|Abous Us/i);
   assert.doesNotMatch(html, />Javascript</);
   assert.doesNotMatch(html, />Linkedin</);
@@ -53,6 +55,8 @@ test("ships site-specific assets and metadata", async () => {
   assert.match(layout, /\.\/styles\/original-landing\.css/);
   assert.match(layout, /\.\/styles\/original-contact\.css/);
   assert.match(css, /prefers-reduced-motion/);
+  assert.match(css, /@media \(min-width:1024px\)/);
+  assert.match(css, /avena-desktop-wordmark/);
   assert.match(builtCss, /header_header__3o0p0/);
   assert.match(builtCss, /landing_section_1__wUsHN/);
   assert.doesNotMatch(page + layout, /_sites-preview|SkeletonPreview/);
