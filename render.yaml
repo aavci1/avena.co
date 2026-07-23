@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: avena-co
+    runtime: static
+    buildCommand: npm ci && npm run build:render
+    staticPublishPath: ./out
